@@ -244,8 +244,8 @@ export default class SurveyScreen extends Component {
                         survey={survey}
                         renderSelector={this.renderButton.bind(this)}
                         containerStyle={styles.surveyContainer}
-                        surveyQuestionsContainerStyle={styles.surveyQuestionsContainer}
-                        buttonViewStyle={{ flexDirection: 'row', justifyContent: 'space-around' }}
+                        selectionGroupContainerStyle={styles.selectionGroupContainer}
+                        navButtonContainerStyle={{ flexDirection: 'row', justifyContent: 'space-around' }}
                         renderPrevious={this.renderPreviousButton.bind(this)}
                         renderNext={this.renderNextButton.bind(this)}
                         renderFinished={this.renderFinishedButton.bind(this)}
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         padding: 5
     },
-    surveyQuestionsContainer: {
+    selectionGroupContainer: {
         flexDirection: 'column',
         backgroundColor: 'white',
         alignContent: 'flex-end',

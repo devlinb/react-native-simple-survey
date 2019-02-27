@@ -24,7 +24,7 @@ export class SimpleSurvey extends Component {
         onSurveyFinished: PropTypes.func,
         renderSelector: PropTypes.func,
         renderTextInput: PropTypes.func,
-        surveyQuestionsContainerStyle: ViewPropTypes.style,
+        selectionGroupContainerStyle: ViewPropTypes.style,
         containerStyle: ViewPropTypes.style,
         renderPrev: PropTypes.func,
         renderNext: PropTypes.func,
@@ -109,9 +109,9 @@ export class SimpleSurvey extends Component {
     }
 
     renderNavButtons() {
-        const { buttonViewStyle } = this.props;
+        const { navButtonContainerStyle } = this.props;
         return (
-            <View style={buttonViewStyle}>
+            <View style={navButtonContainerStyle}>
                 {this.renderPreviousButton()}
                 {this.renderFinishOrNextButton()}
             </View>
@@ -119,7 +119,7 @@ export class SimpleSurvey extends Component {
     }
 
     renderSelectionGroup() {
-        const { survey, renderSelector, surveyQuestionsContainerStyle, containerStyle } = this.props;
+        const { survey, renderSelector, selectionGroupContainerStyle, containerStyle } = this.props;
         const { currentQuestionIndex } = this.state;
 
         return (
@@ -131,7 +131,7 @@ export class SimpleSurvey extends Component {
                     items={survey[currentQuestionIndex].options}
                     isSelected={this.selectionHandlers[currentQuestionIndex].isSelected}
                     renderContent={renderSelector}
-                    containerStyle={surveyQuestionsContainerStyle}
+                    containerStyle={selectionGroupContainerStyle}
                     onItemSelected={(item) => this.updateAnswer({
                         questionId: survey[currentQuestionIndex].questionId,
                         value: item
