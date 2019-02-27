@@ -1,0 +1,15 @@
+{
+    "extends": "rallycoding",
+    "rules": {
+        "max-len": [2, 120, 2],
+        "no-else-return": 0,
+        "quote-props": 0,
+        "dot-notation": 0,
+        "global-require": 0,
+        "no-unused-expressions": 0,
+        "arrow-body-style": "off"
+    },
+    "globals": {
+        "fetch": false
+    }
+}

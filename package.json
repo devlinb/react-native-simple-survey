@@ -1,0 +1,37 @@
+{
+  "name": "react-native-simple-survey",
+  "version": "0.1.0",
+  "description": "Simple JSON powered surveys for React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlinb/react-native-simple-survey.git"
+  },
+  "keywords": [
+    "react-native",
+    "survey",
+    "forms",
+    "first-run-experience",
+    "FRE",
+    "JSON-survey"
+  ],
+  "author": "devlinb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devlinb/react-native-simple-survey/issues"
+  },
+  "homepage": "https://github.com/devlinb/react-native-simple-survey#readme",
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "react-native": ">=0.50.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1"
+  },
+  "dependencies": {
+    "react-native-selection-group": "^1.0.0"
+  }
+}
