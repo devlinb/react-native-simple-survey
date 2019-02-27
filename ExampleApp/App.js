@@ -7,7 +7,6 @@ import {
 import SurveyCompletedScreen from './screens/SurveyCompletedScreen';
 import SurveyScreen from './screens/SurveyScreen';
 
-
 const stackNav = createStackNavigator({
   Survey: {
     screen: SurveyScreen
