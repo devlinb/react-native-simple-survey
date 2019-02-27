@@ -117,7 +117,7 @@ The props ````renderPrevious````, ````renderNext````, ````renderFinished```` all
 |enabled|Boolean indicating if this component should be enabled.|
 
 
-The onPress equivilent (feel free to have fun, so long as the user indicates something) has to call the ````onPress```` lambda that is passed in. At its most boring this looks like 
+The onPress equivalent (feel free to have fun, so long as the user indicates something) has to call the ````onPress```` lambda that is passed in. At its most boring this looks like 
 
 ````JSX
 const renderNext = (onPress, enabled) => {
