@@ -23,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/devlinb/react-native-simple-survey/issues"
   },
-  "homepage": "https://github.com/devlinb/react-native-simple-survey#readme"
+  "homepage": "https://github.com/devlinb/react-native-simple-survey#readme",
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "react-native": ">=0.50.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1"
+  }
 }
