@@ -86,25 +86,25 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
 |Prop|Description|
 |----|-----------|
 |survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example|
-|renderSelector| Returns a component that is used to render the UI for multiple choice questions. Should be a radio button or a regular button|
+|renderSelector| Returns a component that is used to render the UI for multiple choice questions. Should be a UI component that supports single selection, such as a button or radio button. Other creative element types are also possible.|
 |containerStyle| Style object for the the SimpleSurvey's wrapping view|
 |selectionGroupContainerStyle|Style for the view that will wrap the selection group options, as rendered by renderSelector.|
-|navButtonContainerStyle|Wrapping view for the navigation buttons, previous, next, and finished. If not passed in, nav buttons will be wrapped by regular View with no styling.|
+|navButtonContainerStyle|Wrapping view for the navigation buttons, previous, next, and finished. If not passed in, nav buttons will be wrapped by regular a View with no styling.|
 |renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderNext| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderFinished| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
-|renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Basically a <Text> element|
+|renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Basically a ````<Text>```` element|
 |onSurveyFinished| This function receives answers the user typed in as a parameter answers, see the [Callbacks](#callbacks) section. |
 |onAnswerSubmitted| This function is called everytime the user navigates to the next screen, see the [Callbacks](#callbacks) section. |
 |renderTextInput| Returns the component used for user text input, see the [Callbacks](#callbacks) section.|
 |renderNumericInput| Returns the component used for numeric input, see the [Callbacks](#callbacks) section.|
 |renderInfo| Returns the component used to render info screens, see the [Callbacks](#callbacks) section.|
   
-Props that you don't use are always optional. e.g. if you don't have numeric questions, no need to pass in renderNumericInput. Corrolary of this is that the component will throw exceptions if you do pass in a ````questionType: 'NumericInput'````
+Props that you don't use are always optional. e.g. if you don't have numeric questions, no need to pass in renderNumericInput. Corrolary of this is that SimpleSurvey will throw exceptions if you do pass in a ````questionType: 'NumericInput'```` without having defined renderNumericInput.
 
 ## Callbacks
 
-The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you do whatever you want with the UI. 
+The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you do render whatever you want. 
 
 ````onSurveyFinished```` and ````onAnswerSubmitted```` are the only callbacks that don't return a component.
 
@@ -143,7 +143,9 @@ Must returns a component. This is the text shown above above each question.
 Sample usage
 
 ````JSX
-const renderQuestionText = (questionText) => { return (<Text>{questionText}</Text>); }
+const renderQuestionText = (questionText) => {
+    return (<Text>{questionText}</Text>); 
+}
 ````
 
 ### renderSelector
@@ -196,7 +198,7 @@ where value is the answer the user selected or entered. Selection Group is more 
     value: "dog"
   }
 }
-        
+````        
 
 Navigation to leave or close out SimpleSurvey should go here.
 
