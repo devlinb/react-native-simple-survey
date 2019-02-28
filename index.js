@@ -32,21 +32,6 @@ export class SimpleSurvey extends Component {
         renderInfo: PropTypes.func,
     };
 
-    /** survey needs to be
-     * [
-     *     {
-     *         questionType: string
-     *         questionText: string
-     *         questionId: string
-     *         options: [
-     *             { optionText : string, value : any }
-     *             ...
-     *         ]
-     *     }
-     *     ...
-     * ]
-     */
-
     constructor(props) {
         super(props);
         this.state = { currentQuestionIndex: 0, answers: [] };
