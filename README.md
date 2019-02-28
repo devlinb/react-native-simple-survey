@@ -234,10 +234,10 @@ Example:
 ````JSX
 const renderTextInput = (onChange, placeholder, value) {
   return (<TextInput
-            onChangeText={text => onChange(text)}
-            placeholder={placeholder}
-            value={value}
-        />);
+    onChangeText={text => onChange(text)}
+    placeholder={placeholder}
+    value={value}
+  />);
 }
 ````
 
@@ -255,15 +255,16 @@ Example:
 
 ````JSX
 const renderNumericInput = (onChange, value) {
-return (<TextInput 
-            style={styles.numericInput}
-            onChangeText={text => { onChange(text); }}
-            underlineColorAndroid={'white'}
-            placeholderTextColor={'rgba(184,184,184,1)'}
-            value={String(value)}
-            keyboardType={'numeric'}
-            maxLength={3}
-        />);
+  return (<TextInput 
+    style={styles.numericInput}
+    onChangeText={text => { onChange(text); }}
+    underlineColorAndroid={'white'}
+    placeholderTextColor={'rgba(184,184,184,1)'}
+    value={String(value)}
+    keyboardType={'numeric'}
+    maxLength={3}
+  />);
+}
 ````
 
 ### renderInfo
