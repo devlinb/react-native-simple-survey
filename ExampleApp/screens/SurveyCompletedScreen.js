@@ -30,6 +30,7 @@ export default class SurveyCompletedScreen extends Component {
                     <Text style={styles.questionText}>Your favorite color: {answers.favoriteColor}</Text>
                     <Text style={styles.questionText}>Your favorite number: {answers.favoriteNumber}</Text>
                     <Text style={styles.questionText}>Your favorite pet: {answers.favoritePet.value}</Text>
+                    <Text style={styles.questionText}>Your favorite foods: {answers.favoriteFoods[0].value} and {answers.favoriteFoods[1].value}</Text>
                     <Text>Raw JSON: {JSON.stringify(this.props.navigation.getParam('surveyAnswers', {}))}</Text>
                 </View>
             </View>

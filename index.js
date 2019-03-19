@@ -42,6 +42,32 @@ export class SimpleSurvey extends Component {
         }
     }
 
+    // This function returns true if all the condition have been met for a multiple selection question.
+    validateMultipleSelectionSurveyAnswers() {
+        const { currentQuestionIndex, answers } = this.state;
+        if (!this.props.survey[currentQuestionIndex].questionType === 'MultipleSelectionGroup') {
+            throw new Error(
+                'validateMultipleSelectionSurveyAnswers was asked to validate a non MultipleSelectionGroup item'
+            );
+        }
+
+        let maxMultiSelect = 1;
+        let minMultiSelect = 1;
+        if (this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect) {
+            maxMultiSelect = Number(this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect);
+        }
+
+        if (this.props.survey[currentQuestionIndex].questionSettings.minMultiSelect) {
+            minMultiSelect = Number(this.props.survey[currentQuestionIndex].questionSettings.minMultiSelect);
+        } else {
+            minMultiSelect = maxMultiSelect;
+        }
+
+        if (answers[currentQuestionIndex] && answers[currentQuestionIndex].value.length >= minMultiSelect) { 
+            return true; 
+        } else { return false; }
+    }
+
     updateAnswer(answerForCurrentQuestion) {
         const { answers } = this.state;
         answers[this.state.currentQuestionIndex] = answerForCurrentQuestion;
@@ -63,11 +89,14 @@ export class SimpleSurvey extends Component {
         const { survey } = this.props;
         let { currentQuestionIndex } = this.state;
 
-        const enabled = (
-                (Boolean(answers[currentQuestionIndex]) && answers[currentQuestionIndex].value) ||
-                (survey[currentQuestionIndex].questionType === 'Info')
-            );
-        
+        let enabled = false;
+
+        switch (survey[currentQuestionIndex].questionType) {
+            case 'MultipleSelectionGroup': enabled = this.validateMultipleSelectionSurveyAnswers(); break;
+            case 'Info': enabled = true; break;
+            default: enabled = Boolean(answers[currentQuestionIndex]) && answers[currentQuestionIndex].value; break;
+        }
+
         if (currentQuestionIndex === this.props.survey.length - 1) {
             return (
                 this.props.renderFinished(() => {
@@ -120,6 +149,39 @@ export class SimpleSurvey extends Component {
                     onItemSelected={(item) => this.updateAnswer({
                         questionId: survey[currentQuestionIndex].questionId,
                         value: item
+                    })}
+                />
+                {this.renderNavButtons()}
+            </View>
+        );
+    }
+
+    renderMultipleSelectionGroup() {
+        const { survey, renderSelector, selectionGroupContainerStyle, containerStyle } = this.props;
+        const { currentQuestionIndex } = this.state;
+
+        if (this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect) {
+            const multiSelectMax = Number(this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect);
+            if (multiSelectMax === 1) {
+                return this.renderSelectionGroup(); // Why declare multiple selectif only 1 item can be selected?
+            }
+            this.selectionHandlers[currentQuestionIndex].maxSelected = multiSelectMax;
+        }
+
+        return (
+            <View style={containerStyle}>
+                {this.props.renderQuestionText ?
+                    this.props.renderQuestionText(this.props.survey[currentQuestionIndex].questionText) : null}
+                <SelectionGroup
+                    onPress={this.selectionHandlers[currentQuestionIndex].selectionHandler}
+                    items={survey[currentQuestionIndex].options}
+                    isSelected={this.selectionHandlers[currentQuestionIndex].isSelected}
+                    getAllSelectedItemIndexes={this.selectionHandlers[currentQuestionIndex].getAllSelectedItemIndexes}
+                    renderContent={renderSelector}
+                    containerStyle={selectionGroupContainerStyle}
+                    onItemSelected={(item, allSelectedItems) => this.updateAnswer({
+                        questionId: survey[currentQuestionIndex].questionId,
+                        value: allSelectedItems
                     })}
                 />
                 {this.renderNavButtons()}
@@ -199,6 +261,7 @@ export class SimpleSurvey extends Component {
         const currentQuestion = this.state.currentQuestionIndex;
         switch (survey[currentQuestion].questionType) {
             case 'SelectionGroup': return this.renderSelectionGroup();
+            case 'MultipleSelectionGroup': return this.renderMultipleSelectionGroup();
             case 'TextInput': return this.renderTextInputElement();
             case 'NumericInput': return this.renderNumeric();
             case 'Info': return this.renderInfo();

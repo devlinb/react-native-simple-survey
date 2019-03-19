@@ -52,6 +52,50 @@ const survey = [
         ]
     },
     {
+        questionType: 'MultipleSelectionGroup',
+        questionText:
+            'Select your two favorite foods!',
+        questionId: 'favoriteFoods',
+        questionSettings: {
+            maxMultiSelect: 3,
+            minMultiSelect: 2,
+        },
+        options: [
+            {
+                optionText: 'Sticky rice dumplings',
+                value: 'sticky rice dumplings'
+            },
+            {
+                optionText: 'Pad Thai',
+                value: 'pad thai'
+            },
+            {
+                optionText: 'Steak and Eggs',
+                value: 'steak and eggs'
+            },
+            {
+                optionText: 'Tofu',
+                value: 'tofu'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice crem'
+            },
+            {
+                optionText: 'Injera',
+                value: 'injera'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice cream'
+            },
+            {
+                optionText: 'Tamales',
+                value: 'tamales'
+            }
+        ]
+    },
+    {
         questionType: 'Info',
         questionText: 'That is all for the demo, tap finish to see your results!'
     },
