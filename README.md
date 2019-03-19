@@ -1,6 +1,8 @@
 # react-native-simple-survey
 
 ## TOC
+[What's New](#What's new)
+
 [About](#about)
 
 [Usage](#usage)
@@ -10,6 +12,9 @@
 [Callbacks](#callbacks)
 
 [Screenshots](#screenshot)
+
+## What's New
+1.2.0 - MultipleSelectionGroup is now supported. Documentation will come soon, example code is up to date!
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
