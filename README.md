@@ -1,7 +1,7 @@
 # react-native-simple-survey
 
 ## TOC
-[What's New](#What's new)
+[Changes](#changes)
 
 [About](#about)
 
@@ -13,7 +13,7 @@
 
 [Screenshots](#screenshot)
 
-## What's New
+## Changes
 1.2.0 - MultipleSelectionGroup is now supported. Documentation will come soon, example code is up to date!
 
 ## About
