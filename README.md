@@ -11,6 +11,8 @@
 
 [Callbacks](#callbacks)
 
+[JSON Schema](#json-schema)
+
 [Screenshots](#screenshot)
 
 ## Changes
@@ -330,7 +332,55 @@ const renderInfoText = (infoText) {
   return (<Text style={styles.infoText}>{infoText}</Text>);
 }
 ````
+## JSON Schema
+(in Typescript)
 
+````Typescript
+survey : Array<Info|TextInput|NumericInput|SelectionGroup|MultipleSelectionGroup>
+
+interface Info: {
+    questionType: "Info",
+    questionText: string
+}
+
+interface TextInput: {
+    questionType: "TextInput",
+    questionText: string,
+    questionId: string,
+    placeholderText?: string
+}
+
+interface NumericInput: {
+    questionType: "NumericInput",
+    questionText: string,
+    questionId: string,
+    placeholderText?: string
+}
+
+interface SelectionGroupOption: {
+    optionText: string,
+    value: any
+}
+
+interface SelectionGroup: {
+    questionType: "SelectionGroup",
+    questionText: string,
+    questionId: string,
+    questionId: string,
+    options: SelectionGroupOption[]
+}
+
+interface MultipleSelectionGroup: {
+    questionType: "MultipleSelectionGroup",
+    questionText: string,
+    questionId: string,
+    questionSettings: {
+        maxMultiSelect: number,
+        minMultiSelect?: number,
+    },
+    options: SelectionGroupOption[]
+}
+````
 
 ## Screenshot
 ![image](https://user-images.githubusercontent.com/11895351/53525490-c1a78f00-3a96-11e9-9291-f7c65b27f184.png)
