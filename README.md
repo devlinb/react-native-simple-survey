@@ -14,7 +14,7 @@
 [Screenshots](#screenshot)
 
 ## Changes
-1.2.0 - MultipleSelectionGroup is now supported. Documentation will come soon, example code is up to date!
+1.2.0 - MultipleSelectionGroup is now supported. 
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
@@ -58,6 +58,50 @@ const survey = [
                 optionText: 'Ferrets',
                 value: 'ferret'
             },
+        ]
+    },
+    {
+        questionType: 'MultipleSelectionGroup',
+        questionText:
+            'Select your two favorite foods!',
+        questionId: 'favoriteFoods',
+        questionSettings: {
+            maxMultiSelect: 3,
+            minMultiSelect: 2,
+        },
+        options: [
+            {
+                optionText: 'Sticky rice dumplings',
+                value: 'sticky rice dumplings'
+            },
+            {
+                optionText: 'Pad Thai',
+                value: 'pad thai'
+            },
+            {
+                optionText: 'Steak and Eggs',
+                value: 'steak and eggs'
+            },
+            {
+                optionText: 'Tofu',
+                value: 'tofu'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice crem'
+            },
+            {
+                optionText: 'Injera',
+                value: 'injera'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice cream'
+            },
+            {
+                optionText: 'Tamales',
+                value: 'tamales'
+            }
         ]
     },
 ];
@@ -154,7 +198,7 @@ const renderQuestionText = (questionText) => {
 ````
 
 ### renderSelector
-Must return a component. This is the UI element that will be shown for each option of a SelectionGroup. Buttons, radio buttons, sliders, whatever you want, so long as onPress gets called when the user has selected something.
+Must return a component. This is the UI element that will be shown for each option of a SelectionGroup and MultipleSelectionGroup, Buttons, radio buttons, sliders, whatever you want, so long as onPress gets called when the user has selected something.
 
 |Variable|Description|
 |--------|-----|
