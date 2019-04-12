@@ -30,6 +30,7 @@ export class SimpleSurvey extends Component {
         renderNext: PropTypes.func,
         renderFinished: PropTypes.func,
         renderInfo: PropTypes.func,
+        autoAdvance: PropTypes.bool,
     };
 
     constructor(props) {
@@ -72,6 +73,26 @@ export class SimpleSurvey extends Component {
         const { answers } = this.state;
         answers[this.state.currentQuestionIndex] = answerForCurrentQuestion;
         this.setState({ answers });
+    }
+
+    // Do what the next or finished button normally do.
+    autoAdvance() {
+        if (currentQuestionIndex === this.props.survey.length - 1) {
+            if (this.props.onAnswerSubmitted && answers[currentQuestionIndex]) {
+                this.props.onAnswerSubmitted(answers[currentQuestionIndex]);
+            }
+            if (this.props.onSurveyFinished) {
+                // Remove empty answers, coming from info screens.
+                const filteredAnswers = answers.filter(n => n);
+                this.props.onSurveyFinished(filteredAnswers);
+            }
+        } else {
+            if (this.props.onAnswerSubmitted && answers[currentQuestionIndex]) {
+                this.props.onAnswerSubmitted(answers[currentQuestionIndex]);
+            }
+            currentQuestionIndex++;
+            this.setState({ currentQuestionIndex });
+        }
     }
 
     renderPreviousButton() {
@@ -124,12 +145,15 @@ export class SimpleSurvey extends Component {
 
     renderNavButtons() {
         const { navButtonContainerStyle } = this.props;
-        return (
-            <View style={navButtonContainerStyle}>
-                {this.renderPreviousButton()}
-                {this.renderFinishOrNextButton()}
-            </View>
-        );
+        if (this.renderPreviousButton || this.renderFinishOrNextButton) {
+            return (
+                <View style={navButtonContainerStyle}>
+                    {this.renderPreviousButton && this.renderPreviousButton()}
+                    {this.renderFinishOrNextButton && this.renderFinishOrNextButton()}
+                </View>
+            );
+        }
+        return;
     }
 
     renderSelectionGroup() {
@@ -146,10 +170,13 @@ export class SimpleSurvey extends Component {
                     isSelected={this.selectionHandlers[currentQuestionIndex].isSelected}
                     renderContent={renderSelector}
                     containerStyle={selectionGroupContainerStyle}
-                    onItemSelected={(item) => this.updateAnswer({
-                        questionId: survey[currentQuestionIndex].questionId,
-                        value: item
-                    })}
+                    onItemSelected={(item) => { 
+                        this.updateAnswer({
+                            questionId: survey[currentQuestionIndex].questionId,
+                            value: item
+                            });
+                        this.props.autoAdvance && this.props.autoAdvance().bind(this);
+                    }}
                 />
                 {this.renderNavButtons()}
             </View>
@@ -179,10 +206,13 @@ export class SimpleSurvey extends Component {
                     getAllSelectedItemIndexes={this.selectionHandlers[currentQuestionIndex].getAllSelectedItemIndexes}
                     renderContent={renderSelector}
                     containerStyle={selectionGroupContainerStyle}
-                    onItemSelected={(item, allSelectedItems) => this.updateAnswer({
-                        questionId: survey[currentQuestionIndex].questionId,
-                        value: allSelectedItems
-                    })}
+                    onItemSelected={(item, allSelectedItems) => {
+                        this.updateAnswer({
+                            questionId: survey[currentQuestionIndex].questionId,
+                            value: allSelectedItems
+                        });
+                        this.props.autoAdvance && this.props.autoAdvance().bind(this);
+                    }}
                 />
                 {this.renderNavButtons()}
             </View>
@@ -214,7 +244,8 @@ export class SimpleSurvey extends Component {
                             });
                         }
                     },
-                    answers[currentQuestionIndex] === undefined ? '' : answers[currentQuestionIndex].value
+                    answers[currentQuestionIndex] === undefined ? '' : answers[currentQuestionIndex].value,
+                    this.props.autoAdvance ? this.autoAdvance.bind(this) : null
                 )}
                 {this.renderNavButtons()}
             </View>
@@ -237,6 +268,7 @@ export class SimpleSurvey extends Component {
                 }),
                 placeholderText,
                 answers[currentQuestionIndex] === undefined ? undefined : answers[currentQuestionIndex].value,
+                this.props.autoAdvance ? this.autoAdvance.bind(this) : null
             )}
             {this.renderNavButtons()}
         </View>
