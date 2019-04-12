@@ -175,7 +175,7 @@ export class SimpleSurvey extends Component {
                             questionId: survey[currentQuestionIndex].questionId,
                             value: item
                             });
-                        this.props.autoAdvance && this.props.autoAdvance().bind(this);
+                        this.props.autoAdvance && this.autoAdvance();
                     }}
                 />
                 {this.renderNavButtons()}
@@ -211,7 +211,7 @@ export class SimpleSurvey extends Component {
                             questionId: survey[currentQuestionIndex].questionId,
                             value: allSelectedItems
                         });
-                        this.props.autoAdvance && this.props.autoAdvance().bind(this);
+                        this.props.autoAdvance && this.autoAdvance();
                     }}
                 />
                 {this.renderNavButtons()}
@@ -245,7 +245,7 @@ export class SimpleSurvey extends Component {
                         }
                     },
                     answers[currentQuestionIndex] === undefined ? '' : answers[currentQuestionIndex].value,
-                    this.props.autoAdvance ? this.autoAdvance.bind(this) : null
+                    this.props.autoAdvance ? this.autoAdvance() : null
                 )}
                 {this.renderNavButtons()}
             </View>
@@ -268,7 +268,7 @@ export class SimpleSurvey extends Component {
                 }),
                 placeholderText,
                 answers[currentQuestionIndex] === undefined ? undefined : answers[currentQuestionIndex].value,
-                this.props.autoAdvance ? this.autoAdvance.bind(this) : null
+                this.props.autoAdvance ? this.autoAdvance() : null
             )}
             {this.renderNavButtons()}
         </View>
