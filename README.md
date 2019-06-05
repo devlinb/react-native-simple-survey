@@ -1,7 +1,7 @@
 # react-native-simple-survey
 
 ## TOC
-[What's New](#What's new)
+[Changes](#changes)
 
 [About](#about)
 
@@ -11,10 +11,12 @@
 
 [Callbacks](#callbacks)
 
+[JSON Schema](#json-schema)
+
 [Screenshots](#screenshot)
 
-## What's New
-1.2.0 - MultipleSelectionGroup is now supported. Documentation will come soon, example code is up to date!
+## Changes
+1.2.0 - MultipleSelectionGroup is now supported. 
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
@@ -58,6 +60,50 @@ const survey = [
                 optionText: 'Ferrets',
                 value: 'ferret'
             },
+        ]
+    },
+    {
+        questionType: 'MultipleSelectionGroup',
+        questionText:
+            'Select your two favorite foods!',
+        questionId: 'favoriteFoods',
+        questionSettings: {
+            maxMultiSelect: 3,
+            minMultiSelect: 2,
+        },
+        options: [
+            {
+                optionText: 'Sticky rice dumplings',
+                value: 'sticky rice dumplings'
+            },
+            {
+                optionText: 'Pad Thai',
+                value: 'pad thai'
+            },
+            {
+                optionText: 'Steak and Eggs',
+                value: 'steak and eggs'
+            },
+            {
+                optionText: 'Tofu',
+                value: 'tofu'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice crem'
+            },
+            {
+                optionText: 'Injera',
+                value: 'injera'
+            },
+            {
+                optionText: 'Ice cream!',
+                value: 'ice cream'
+            },
+            {
+                optionText: 'Tamales',
+                value: 'tamales'
+            }
         ]
     },
 ];
@@ -154,7 +200,7 @@ const renderQuestionText = (questionText) => {
 ````
 
 ### renderSelector
-Must return a component. This is the UI element that will be shown for each option of a SelectionGroup. Buttons, radio buttons, sliders, whatever you want, so long as onPress gets called when the user has selected something.
+Must return a component. This is the UI element that will be shown for each option of a SelectionGroup and MultipleSelectionGroup, Buttons, radio buttons, sliders, whatever you want, so long as onPress gets called when the user has selected something.
 
 |Variable|Description|
 |--------|-----|
@@ -286,7 +332,55 @@ const renderInfoText = (infoText) {
   return (<Text style={styles.infoText}>{infoText}</Text>);
 }
 ````
+## JSON Schema
+(in Typescript)
 
+````Typescript
+survey : Array<Info|TextInput|NumericInput|SelectionGroup|MultipleSelectionGroup>
+
+interface Info: {
+    questionType: "Info",
+    questionText: string
+}
+
+interface TextInput: {
+    questionType: "TextInput",
+    questionText: string,
+    questionId: string,
+    placeholderText?: string
+}
+
+interface NumericInput: {
+    questionType: "NumericInput",
+    questionText: string,
+    questionId: string,
+    placeholderText?: string
+}
+
+interface SelectionGroupOption: {
+    optionText: string,
+    value: any
+}
+
+interface SelectionGroup: {
+    questionType: "SelectionGroup",
+    questionText: string,
+    questionId: string,
+    questionId: string,
+    options: SelectionGroupOption[]
+}
+
+interface MultipleSelectionGroup: {
+    questionType: "MultipleSelectionGroup",
+    questionText: string,
+    questionId: string,
+    questionSettings: {
+        maxMultiSelect: number,
+        minMultiSelect?: number,
+    },
+    options: SelectionGroupOption[]
+}
+````
 
 ## Screenshot
 ![image](https://user-images.githubusercontent.com/11895351/53525490-c1a78f00-3a96-11e9-9291-f7c65b27f184.png)
