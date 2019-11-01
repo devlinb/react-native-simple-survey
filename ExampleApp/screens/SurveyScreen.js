@@ -93,11 +93,12 @@ const survey = [
                 optionText: 'Tamales',
                 value: 'tamales'
             },
-            {
-                questionType: 'Info',
-                questionText: 'That is all for the demo, tap finish to see your results!'
-            },
+            
         ]
+    },
+    {
+        questionType: 'Info',
+        questionText: 'That is all for the demo, tap finish to see your results!'
     },
 ];
 
