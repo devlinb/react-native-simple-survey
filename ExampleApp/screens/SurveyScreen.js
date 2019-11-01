@@ -92,7 +92,8 @@ const survey = [
             {
                 optionText: 'Tamales',
                 value: 'tamales'
-            }
+            },
+            
         ]
     },
     {
@@ -241,7 +242,7 @@ export default class SurveyScreen extends Component {
         );
     }
 
-    renderTextBox(onChange, placeholder, value) {
+    renderTextBox(onChange, placeholder, value, onBlur) {
         return (
             <View>
                 <TextInput
@@ -253,6 +254,7 @@ export default class SurveyScreen extends Component {
                     placeholderTextColor={'rgba(184,184,184,1)'}
                     value={value}
                     multiline
+                    onBlur={onBlur}
                     blurOnSubmit
                     returnKeyType='done'
                 />
@@ -260,7 +262,7 @@ export default class SurveyScreen extends Component {
         );
     }
 
-    renderNumericInput(onChange, value) {
+    renderNumericInput(onChange, value, onBlur) {
         return (<TextInput 
             style={styles.numericInput}
             onChangeText={text => { onChange(text); }}
@@ -268,6 +270,7 @@ export default class SurveyScreen extends Component {
             placeholderTextColor={'rgba(184,184,184,1)'}
             value={String(value)}
             keyboardType={'numeric'}
+            onBlur={onBlur}
             maxLength={3}
         />);
     }
@@ -299,6 +302,7 @@ export default class SurveyScreen extends Component {
                         renderTextInput={this.renderTextBox}
                         renderNumericInput={this.renderNumericInput}
                         renderInfo={this.renderInfoText}
+                        autoAdvance
                     />
                 </View>
             </View>
@@ -379,7 +383,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         
         padding: 10,
-        fontFamily: 'palanquin-light',
         textAlignVertical: 'top',
         marginLeft: 10,
         marginRight: 10
