@@ -38,9 +38,6 @@ export class SimpleSurvey extends Component {
         this.state = { currentQuestionIndex: 0, answers: [] };
         this.updateAnswer.bind(this);
         this.selectionHandlers = [];
-        for (let i = 0; i < this.props.survey.length; i++) {
-            this.selectionHandlers[i] = new SelectionHandler();
-        }
     }
 
     // This function returns true if all the condition have been met for a multiple selection question.
@@ -166,9 +163,59 @@ export class SimpleSurvey extends Component {
         return;
     }
 
+    validateSelectionGroupSettings(questionSettings, currentQuestionIndex) {
+        if (!questionSettings) return;
+        const { allowDeselect, defaultSelection, autoAdvance: autoAdvanceThisQuestion } = questionSettings;
+        if (allowDeselect !== undefined &&
+            typeof allowDeselect !== 'boolean') {
+            throw new Error(
+                `allowDeselect was not passed in as a boolean for question ${currentQuestionIndex}`
+            );
+        }
+        if (defaultSelection !== undefined && (this.props.autoAdvance || autoAdvanceThisQuestion)) {
+            throw new Error(
+                `Cannot set auto advance and a default selection for question ${currentQuestionIndex}`
+            );
+        }
+        if (autoAdvanceThisQuestion !== undefined && 
+            typeof autoAdvanceThisQuestion !== 'boolean') {
+                throw new Error(
+                    `autoAdvance was not passed in as a boolean for ${currentQuestionIndex}`
+                );  
+        }
+    }
+
     renderSelectionGroup() {
         const { survey, renderSelector, selectionGroupContainerStyle, containerStyle } = this.props;
         const { currentQuestionIndex } = this.state;
+        const autoAdvanceThisQuestion = Boolean(this.props.survey[currentQuestionIndex].questionSettings && this.props.survey[currentQuestionIndex].questionSettings.autoAdvance);
+        this.validateSelectionGroupSettings(this.props.survey[currentQuestionIndex].questionSettings, currentQuestionIndex);
+        if (!this.selectionHandlers[currentQuestionIndex]) {
+            console.log(`question: ${JSON.stringify(this.props.survey[currentQuestionIndex], 2)}`);
+            if (!this.props.survey[currentQuestionIndex].questionSettings) {
+                this.selectionHandlers[currentQuestionIndex] = new SelectionHandler({ maxMultiSelect: 1, allowDeselect: true });
+            } else {    
+                const { allowDeselect, defaultSelection } = this.props.survey[currentQuestionIndex].questionSettings;
+
+                if (defaultSelection !== undefined && typeof defaultSelection !== 'number') {
+                    throw new Error(
+                        `Default Selection not specified as an index for question ${currentQuestionIndex}`
+                    );
+                }
+
+                const options = {};
+                options.maxMultiSelect = 1;
+                options.allowDeselect = allowDeselect === undefined || allowDeselect === true;
+                options.defaultSelection = defaultSelection !== undefined ? defaultSelection : null;
+                
+                this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
+                
+                
+                // if (defaultSelection) { 
+                //     this.selectionHandlers[currentQuestionIndex].selectionOption = defaultSelection;
+                // }
+            }
+        }
 
         return (
             <View style={containerStyle}>
@@ -185,7 +232,13 @@ export class SimpleSurvey extends Component {
                             questionId: survey[currentQuestionIndex].questionId,
                             value: item
                             });
-                        this.props.autoAdvance && this.autoAdvance();
+                        (this.props.autoAdvance || autoAdvanceThisQuestion) && this.autoAdvance();
+                    }}
+                    onItemDeselected={() => {
+                        this.updateAnswer({
+                            questionId: survey[currentQuestionIndex].questionId,
+                            value: null
+                        });
                     }}
                 />
                 {this.renderNavButtons()}
@@ -194,15 +247,31 @@ export class SimpleSurvey extends Component {
     }
 
     renderMultipleSelectionGroup() {
+        console.log('rendering multipleselectiongroup');
         const { survey, renderSelector, selectionGroupContainerStyle, containerStyle } = this.props;
         const { currentQuestionIndex } = this.state;
+        const { allowDeselect, defaultSelection, autoAdvance: autoAdvanceThisQuestion } = 
+            this.props.survey[currentQuestionIndex].questionSettings;
+            console.log(`question: ${JSON.stringify(this.props.survey[currentQuestionIndex], 2)}`);
+        const multiSelectMax = Number(this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect);
+        if (multiSelectMax === 1) {
+            return this.renderSelectionGroup(); // Why declare multiple selectif only 1 item can be selected?
+        }
+        this.validateSelectionGroupSettings(this.props.survey[currentQuestionIndex].questionSettings);
 
-        if (this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect) {
-            const multiSelectMax = Number(this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect);
-            if (multiSelectMax === 1) {
-                return this.renderSelectionGroup(); // Why declare multiple selectif only 1 item can be selected?
+        if (!this.selectionHandlers[currentQuestionIndex]) {
+            if (this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect) {        
+                if (defaultSelection !== undefined && !Array.isArray(defaultSelection)) {
+                    throw new Error(
+                        `Default Selection not specified as an array for multiple selection question ${currentQuestionIndex}`
+                    );
+                }
+                const options = {};
+                options.maxMultiSelect = multiSelectMax;
+                options.allowDeselect = allowDeselect === undefined || allowDeselect === true;
+                options.defaultSelection = defaultSelection !== undefined ? defaultSelection : null;
+                this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
             }
-            this.selectionHandlers[currentQuestionIndex].maxSelected = multiSelectMax;
         }
 
         return (
@@ -221,7 +290,13 @@ export class SimpleSurvey extends Component {
                             questionId: survey[currentQuestionIndex].questionId,
                             value: allSelectedItems
                         });
-                        this.props.autoAdvance && this.autoAdvance();
+                        (autoAdvanceThisQuestion || this.props.autoAdvance) && this.autoAdvance();
+                    }}
+                    onItemDeselected={(item, allSelectedItems) => {
+                        this.updateAnswer({
+                            questionId: survey[currentQuestionIndex].questionId,
+                            value: allSelectedItems
+                        });
                     }}
                 />
                 {this.renderNavButtons()}

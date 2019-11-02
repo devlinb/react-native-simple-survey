@@ -26,7 +26,7 @@ const survey = [
     {
         questionType: 'SelectionGroup',
         questionText:
-            'Naturally Simple Survey also has multiple choice questions. What is your favorite pet?',
+            'Naturally Simple Survey also has multiple choice questions. By default they acts like checkboxes, answers can be selected and deselected.\n\nWhat is your favorite pet?',
         questionId: 'favoritePet',
         options: [
             {
@@ -79,21 +79,120 @@ const survey = [
             },
             {
                 optionText: 'Ice cream!',
-                value: 'ice crem'
+                value: 'ice cream'
             },
             {
                 optionText: 'Injera',
                 value: 'injera'
             },
             {
-                optionText: 'Ice cream!',
-                value: 'ice cream'
+                optionText: 'Biryani',
+                value: 'biryani'
             },
             {
                 optionText: 'Tamales',
                 value: 'tamales'
             },
-            
+        ]
+    },
+    {
+        questionType: 'MultipleSelectionGroup',
+        questionText:
+            'Simple Survey can auto advance after a question has been answered. Select two things you do to relax:',
+        questionId: 'relax',
+        questionSettings: {
+            maxMultiSelect: 2,
+            minMultiSelect: 2,
+            autoAdvance: true,
+        },
+        options: [
+            {
+                optionText: 'Reading a good book',
+                value: 'reading'
+            },
+            {
+                optionText: 'Going on vacation',
+                value: 'vacations'
+            },
+            {
+                optionText: 'Eating meals with family',
+                value: 'meals'
+            },
+            {
+                optionText: 'Heading to the ocean',
+                value: 'ocean'
+            }
+        ]
+    },
+    {
+        questionType: 'SelectionGroup',
+        questionText:
+            'Simple Survey can also simulate radio button behavior. Pick from below: ',
+        questionId: 'radio',
+        questionSettings: {
+            allowDeselect: false,
+        },
+        options: [
+            {
+                optionText: 'I was forced to pick option 1',
+                value: 'option 1'
+            },
+            {
+                optionText: 'I have to pick option 2',
+                value: 'option 2'
+            },
+            {
+                optionText: 'I guess option 3',
+                value: 'option 3'
+            }
+        ]
+    },
+    {
+        questionType: 'SelectionGroup',
+        questionText:
+            'Simple Survey also supports default selections: ',
+        questionId: 'singleDefault',
+        questionSettings: {
+            defaultSelection: 0
+        },
+        options: [
+            {
+                optionText: 'This is the default option',
+                value: 'default'
+            },
+            {
+                optionText: 'This is the alternative option',
+                value: 'alternative'
+            },
+        ]
+    },
+    {
+        questionType: 'MultipleSelectionGroup',
+        questionText:
+            'And of course it supports multiple defaults: ',
+        questionId: 'multipleDefaults',
+        questionSettings: {
+            defaultSelection: [0, 2],
+            maxMultiSelect: 2,
+            minMultiSelect: 2,
+        },
+        options: [
+            {
+                optionText: 'This is the first default option',
+                value: 'first default'
+            },
+            {
+                optionText: 'This is the first alternate option',
+                value: 'first alternative'
+            },
+            {
+                optionText: 'This is the second default option',
+                value: 'second default'
+            },
+            {
+                optionText: 'This is the second alternate option',
+                value: 'second alternative'
+            },
         ]
     },
     {
@@ -209,7 +308,7 @@ export default class SurveyScreen extends Component {
         return (
             <View style={{ flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10 }}>
                 <Button
-                    title={'finished'}
+                    title={'Finished'}
                     onPress={onPress}
                     disabled={!enabled}
                     color={GREEN}
@@ -228,6 +327,7 @@ export default class SurveyScreen extends Component {
                     title={data.optionText}
                     onPress={onPress}
                     color={isSelected ? GREEN : PURPLE}
+                    style={isSelected ? { fontWeight: 'bold' } : {}} 
                     key={`button_${index}`}
                 />
             </View>
