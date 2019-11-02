@@ -402,6 +402,7 @@ export default class SurveyScreen extends Component {
                         renderTextInput={this.renderTextBox}
                         renderNumericInput={this.renderNumericInput}
                         renderInfo={this.renderInfoText}
+                        autoAdvance
                     />
                 </View>
             </View>
