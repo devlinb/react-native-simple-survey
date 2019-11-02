@@ -16,12 +16,19 @@
 [Screenshots](#screenshot)
 
 ## Changes
+2.0   - Lots of new features!
+* autoAdvance is now supported on a per question basis for ``SelectionGroup`` and ``MultipleSelectionGroup``
+* By default ``SelectionGroup`` and ``MultipleSelectionGroup`` items can be deselected, there is a new ``questionSettings`` field deselectionAllowed that can disable this behavior
+* ``SelectionGroup`` and ``MultipleSelectionGroup`` have a new ``questionSettings`` field ``defaultSelection``, it is a single value for ``SelectionGroup`` and an array of numbers for ``MultipleSelectionGroup``. The values in both cases are index(es) of element(s) that should be selected by default.
+
 1.2.0 - MultipleSelectionGroup is now supported. 
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
 
 ## Usage
+
+See the ExampleApp for 
 
 Feed it JSON such as
 
@@ -95,10 +102,6 @@ const survey = [
             {
                 optionText: 'Injera',
                 value: 'injera'
-            },
-            {
-                optionText: 'Ice cream!',
-                value: 'ice cream'
             },
             {
                 optionText: 'Tamales',
@@ -354,7 +357,7 @@ interface NumericInput: {
     questionType: "NumericInput",
     questionText: string,
     questionId: string,
-    placeholderText?: string
+    placeholderText?: string,
 }
 
 interface SelectionGroupOption: {
@@ -367,7 +370,13 @@ interface SelectionGroup: {
     questionText: string,
     questionId: string,
     questionId: string,
+    questionSettings: {
+        autoAdvance: boolean,
+        allowDeselection: boolean,
+        defaultSelection: number,
+    },
     options: SelectionGroupOption[]
+    
 }
 
 interface MultipleSelectionGroup: {
@@ -375,8 +384,11 @@ interface MultipleSelectionGroup: {
     questionText: string,
     questionId: string,
     questionSettings: {
+        autoAdvance: boolean,
+        allowDeselection: boolean,
         maxMultiSelect: number,
         minMultiSelect?: number,
+        defaultSelection: Array<number>,
     },
     options: SelectionGroupOption[]
 }
