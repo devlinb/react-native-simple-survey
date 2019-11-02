@@ -5,6 +5,8 @@
 
 [About](#about)
 
+[Demo](#demo)
+
 [Usage](#usage)
 
 [Props](#props)
@@ -26,6 +28,9 @@
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
+
+## Demo
+See a live demo at https://snack.expo.io/@devlinb/react-native-simple-survey-example-app
 
 ## Usage
 
