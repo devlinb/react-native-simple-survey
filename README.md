@@ -164,7 +164,7 @@ Props that you don't use are always optional. e.g. if you don't have numeric que
 
 ## Callbacks
 
-The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you do render whatever you want. 
+The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you render whatever you want. 
 
 ````onSurveyFinished```` and ````onAnswerSubmitted```` are the only callbacks that don't return a component.
 
