@@ -32,6 +32,6 @@
     "eslint": "^5.14.1"
   },
   "dependencies": {
-    "react-native-selection-group": "^1.1.2"
+    "react-native-selection-group": "^2.0.0"
   }
 }
