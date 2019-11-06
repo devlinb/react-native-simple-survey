@@ -378,7 +378,6 @@ interface SelectionGroup: {
     questionType: "SelectionGroup",
     questionText: string,
     questionId: string,
-    questionId: string,
     questionSettings: {
         autoAdvance: boolean,
         allowDeselection: boolean,
