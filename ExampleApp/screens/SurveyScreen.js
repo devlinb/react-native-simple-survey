@@ -54,7 +54,7 @@ const survey = [
     {
         questionType: 'MultipleSelectionGroup',
         questionText:
-            'Select your two favorite foods!',
+            'Select two or three of your favorite foods!',
         questionId: 'favoriteFoods',
         questionSettings: {
             maxMultiSelect: 3,
@@ -348,7 +348,7 @@ export default class SurveyScreen extends Component {
                 <TextInput
                     style={styles.textBox}
                     onChangeText={text => onChange(text)}
-                    numberOfLines={3}
+                    numberOfLines={1}
                     underlineColorAndroid={'white'}
                     placeholder={placeholder}
                     placeholderTextColor={'rgba(184,184,184,1)'}
