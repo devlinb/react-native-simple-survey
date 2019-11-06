@@ -148,18 +148,18 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
 
 |Prop|Description|
 |----|-----------|
-|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example|
+|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example app.|
 |renderSelector| Returns a component that is used to render the UI for multiple choice questions. Should be a UI component that supports single selection, such as a button or radio button. Other creative element types are also possible.|
 |containerStyle| Style object for the the SimpleSurvey's wrapping view|
 |selectionGroupContainerStyle|Style for the view that will wrap the selection group options, as rendered by renderSelector.|
 |navButtonContainerStyle|Wrapping view for the navigation buttons, previous, next, and finished. If not passed in, nav buttons will be wrapped by regular a View with no styling.|
-|renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
+|renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Most often a some type of ``<TouchableOpacity>`` or your favorite flavor of ``<Button>``|
 |renderNext| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderFinished| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Basically a ````<Text>```` element|
-|onSurveyFinished| This function receives answers the user typed in as a parameter answers, see the [Callbacks](#callbacks) section. |
+|onSurveyFinished| This function receives answers the user typed/selected as the parameter ``answers``, see the [Callbacks](#callbacks) section. |
 |onAnswerSubmitted| This function is called everytime the user navigates to the next screen, see the [Callbacks](#callbacks) section. |
-|renderTextInput| Returns the component used for user text input, see the [Callbacks](#callbacks) section.|
+|renderTextInput| Function that returns the component used for user text input, see the [Callbacks](#callbacks) section.|
 |renderNumericInput| Returns the component used for numeric input, see the [Callbacks](#callbacks) section.|
 |renderInfo| Returns the component used to render info screens, see the [Callbacks](#callbacks) section.|
   
