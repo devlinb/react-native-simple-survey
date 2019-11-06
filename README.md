@@ -37,7 +37,7 @@ See a live demo at https://snack.expo.io/@devlinb/react-native-simple-survey-exa
 
 ## Usage
 
-See the ExampleApp for 
+See the ExampleApp for a demonstration of all the features.
 
 Feed it JSON such as
 
