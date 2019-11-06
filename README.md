@@ -18,7 +18,7 @@
 [Screenshots](#screenshot)
 
 ## Changes
-2.0.2 - When a default defaultSelection is set, the netx and finish buttons are now properly enabled.
+2.0.2 - When a default defaultSelection is set, the next and finish buttons are now properly enabled.
 
 2.0.1 - Update README.md for NPM.
 
