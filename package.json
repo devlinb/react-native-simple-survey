@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-survey",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Simple JSON powered surveys for React Native",
   "main": "index.js",
   "scripts": {
