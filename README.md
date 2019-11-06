@@ -81,7 +81,7 @@ const survey = [
     {
         questionType: 'MultipleSelectionGroup',
         questionText:
-            'Select your two favorite foods!',
+            'Select two or three of your favorite foods!',
         questionId: 'favoriteFoods',
         questionSettings: {
             maxMultiSelect: 3,
