@@ -176,7 +176,7 @@ The props ````renderPrevious````, ````renderNext````, ````renderFinished```` all
 
 |Parameter|Description|
 |---------|-----------|
-|onPress|Must be called when this component is activiated (tapped, swiped, clicked, etc)|
+|onPress|Must be called when this component is activated (tapped, swiped, clicked, etc)|
 |enabled|Boolean indicating if this component should be enabled.|
 
 
@@ -268,7 +268,7 @@ Navigation to leave or close out SimpleSurvey should go here.
 It is highly recommended that you do something like ````const infoQuestionsRemoved = [...answers];```` to remove Info elements from the array.
 
 ### onQuestionAnswered
-Called after the user activitates the ````renderNext```` component.
+Called after the user activates the ````renderNext```` component.
 
 |Parameter|Description|
 |---------|-----------|
