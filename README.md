@@ -148,7 +148,7 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
 
 |Prop|Description|
 |----|-----------|
-|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example app.|
+|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example app, the schema is defined in [JSON Schema](#json-schema)|
 |renderSelector| Returns a component that is used to render the UI for multiple choice questions. Should be a UI component that supports single selection, such as a button or radio button. Other creative element types are also possible.|
 |containerStyle| Style object for the the SimpleSurvey's wrapping view|
 |selectionGroupContainerStyle|Style for the view that will wrap the selection group options, as rendered by renderSelector.|
