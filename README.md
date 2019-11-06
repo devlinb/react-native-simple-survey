@@ -19,7 +19,9 @@
 
 ## Changes
 2.0.2 - When a default defaultSelection is set, the netx and finish buttons are now properly enabled.
+
 2.0.1 - Update README.md for NPM.
+
 2.0   - Lots of new features!
 * autoAdvance is now supported on a per question basis for ``SelectionGroup`` and ``MultipleSelectionGroup``
 * By default ``SelectionGroup`` and ``MultipleSelectionGroup`` items can be deselected, there is a new ``questionSettings`` field deselectionAllowed that can disable this behavior
