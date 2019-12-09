@@ -5,6 +5,8 @@
 
 [About](#about)
 
+[Demo](#demo)
+
 [Usage](#usage)
 
 [Props](#props)
@@ -16,12 +18,26 @@
 [Screenshots](#screenshot)
 
 ## Changes
+2.0.2 - When a default defaultSelection is set, the next and finish buttons are now properly enabled.
+
+2.0.1 - Update README.md for NPM.
+
+2.0   - Lots of new features!
+* autoAdvance is now supported on a per question basis for ``SelectionGroup`` and ``MultipleSelectionGroup``
+* By default ``SelectionGroup`` and ``MultipleSelectionGroup`` items can be deselected, there is a new ``questionSettings`` field deselectionAllowed that can disable this behavior
+* ``SelectionGroup`` and ``MultipleSelectionGroup`` have a new ``questionSettings`` field ``defaultSelection``, it is a single value for ``SelectionGroup`` and an array of numbers for ``MultipleSelectionGroup``. The values in both cases are index(es) of element(s) that should be selected by default.
+
 1.2.0 - MultipleSelectionGroup is now supported. 
 
 ## About
 react-native-simple-survey is a super simple way to ask your user questions. Give it some JSON with questions and some callbacks to draw the UI and Simple Survey handles all state management for you, runs the user through your questions, and pops answers out at the end.
 
+## Demo
+See a live demo at https://snack.expo.io/@devlinb/react-native-simple-survey-example-app
+
 ## Usage
+
+See the ExampleApp for a demonstration of all the features.
 
 Feed it JSON such as
 
@@ -65,7 +81,7 @@ const survey = [
     {
         questionType: 'MultipleSelectionGroup',
         questionText:
-            'Select your two favorite foods!',
+            'Select two or three of your favorite foods!',
         questionId: 'favoriteFoods',
         questionSettings: {
             maxMultiSelect: 3,
@@ -95,10 +111,6 @@ const survey = [
             {
                 optionText: 'Injera',
                 value: 'injera'
-            },
-            {
-                optionText: 'Ice cream!',
-                value: 'ice cream'
             },
             {
                 optionText: 'Tamales',
@@ -136,18 +148,18 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
 
 |Prop|Description|
 |----|-----------|
-|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example|
+|survey| JSON formatted as show in [Usage](#usage) all valid fields are show in the example app, the schema is defined in [JSON Schema](#json-schema)|
 |renderSelector| Returns a component that is used to render the UI for multiple choice questions. Should be a UI component that supports single selection, such as a button or radio button. Other creative element types are also possible.|
 |containerStyle| Style object for the the SimpleSurvey's wrapping view|
 |selectionGroupContainerStyle|Style for the view that will wrap the selection group options, as rendered by renderSelector.|
 |navButtonContainerStyle|Wrapping view for the navigation buttons, previous, next, and finished. If not passed in, nav buttons will be wrapped by regular a View with no styling.|
-|renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
+|renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Most often a some type of ``<TouchableOpacity>`` or your favorite flavor of ``<Button>``|
 |renderNext| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderFinished| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Basically a ````<Text>```` element|
-|onSurveyFinished| This function receives answers the user typed in as a parameter answers, see the [Callbacks](#callbacks) section. |
+|onSurveyFinished| This function receives answers the user typed/selected as the parameter ``answers``, see the [Callbacks](#callbacks) section. |
 |onAnswerSubmitted| This function is called everytime the user navigates to the next screen, see the [Callbacks](#callbacks) section. |
-|renderTextInput| Returns the component used for user text input, see the [Callbacks](#callbacks) section.|
+|renderTextInput| Function that returns the component used for user text input, see the [Callbacks](#callbacks) section.|
 |renderNumericInput| Returns the component used for numeric input, see the [Callbacks](#callbacks) section.|
 |renderInfo| Returns the component used to render info screens, see the [Callbacks](#callbacks) section.|
   
@@ -155,7 +167,7 @@ Props that you don't use are always optional. e.g. if you don't have numeric que
 
 ## Callbacks
 
-The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you do render whatever you want. 
+The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you render whatever you want. 
 
 ````onSurveyFinished```` and ````onAnswerSubmitted```` are the only callbacks that don't return a component.
 
@@ -164,7 +176,7 @@ The props ````renderPrevious````, ````renderNext````, ````renderFinished```` all
 
 |Parameter|Description|
 |---------|-----------|
-|onPress|Must be called when this component is activiated (tapped, swiped, clicked, etc)|
+|onPress|Must be called when this component is activated (tapped, swiped, clicked, etc)|
 |enabled|Boolean indicating if this component should be enabled.|
 
 
@@ -256,7 +268,7 @@ Navigation to leave or close out SimpleSurvey should go here.
 It is highly recommended that you do something like ````const infoQuestionsRemoved = [...answers];```` to remove Info elements from the array.
 
 ### onQuestionAnswered
-Called after the user activitates the ````renderNext```` component.
+Called after the user activates the ````renderNext```` component.
 
 |Parameter|Description|
 |---------|-----------|
@@ -354,7 +366,7 @@ interface NumericInput: {
     questionType: "NumericInput",
     questionText: string,
     questionId: string,
-    placeholderText?: string
+    placeholderText?: string,
 }
 
 interface SelectionGroupOption: {
@@ -366,8 +378,13 @@ interface SelectionGroup: {
     questionType: "SelectionGroup",
     questionText: string,
     questionId: string,
-    questionId: string,
+    questionSettings: {
+        autoAdvance: boolean,
+        allowDeselection: boolean,
+        defaultSelection: number,
+    },
     options: SelectionGroupOption[]
+    
 }
 
 interface MultipleSelectionGroup: {
@@ -375,8 +392,11 @@ interface MultipleSelectionGroup: {
     questionText: string,
     questionId: string,
     questionSettings: {
+        autoAdvance: boolean,
+        allowDeselection: boolean,
         maxMultiSelect: number,
         minMultiSelect?: number,
+        defaultSelection: Array<number>,
     },
     options: SelectionGroupOption[]
 }

@@ -61,7 +61,7 @@ export class SimpleSurvey extends Component {
             minMultiSelect = maxMultiSelect;
         }
 
-        if (answers[currentQuestionIndex] && answers[currentQuestionIndex].value.length >= minMultiSelect) { 
+        if (answers[currentQuestionIndex] && answers[currentQuestionIndex].value.length >= minMultiSelect) {
             return true; 
         } else { return false; }
     }
@@ -191,7 +191,6 @@ export class SimpleSurvey extends Component {
         const autoAdvanceThisQuestion = Boolean(this.props.survey[currentQuestionIndex].questionSettings && this.props.survey[currentQuestionIndex].questionSettings.autoAdvance);
         this.validateSelectionGroupSettings(this.props.survey[currentQuestionIndex].questionSettings, currentQuestionIndex);
         if (!this.selectionHandlers[currentQuestionIndex]) {
-            console.log(`question: ${JSON.stringify(this.props.survey[currentQuestionIndex], 2)}`);
             if (!this.props.survey[currentQuestionIndex].questionSettings) {
                 this.selectionHandlers[currentQuestionIndex] = new SelectionHandler({ maxMultiSelect: 1, allowDeselect: true });
             } else {    
@@ -210,10 +209,13 @@ export class SimpleSurvey extends Component {
                 
                 this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
                 
-                
-                // if (defaultSelection) { 
-                //     this.selectionHandlers[currentQuestionIndex].selectionOption = defaultSelection;
-                // }
+                if (typeof options.defaultSelection === 'number') { 
+                    // Set timeout is used here to avoid updateAnswer's call to setState.
+                    setTimeout(() => this.updateAnswer({
+                        questionId: survey[currentQuestionIndex].questionId,
+                        value: survey[currentQuestionIndex].options[options.defaultSelection]
+                        }), 0);
+                }
             }
         }
 
@@ -252,7 +254,6 @@ export class SimpleSurvey extends Component {
         const { currentQuestionIndex } = this.state;
         const { allowDeselect, defaultSelection, autoAdvance: autoAdvanceThisQuestion } = 
             this.props.survey[currentQuestionIndex].questionSettings;
-            console.log(`question: ${JSON.stringify(this.props.survey[currentQuestionIndex], 2)}`);
         const multiSelectMax = Number(this.props.survey[currentQuestionIndex].questionSettings.maxMultiSelect);
         if (multiSelectMax === 1) {
             return this.renderSelectionGroup(); // Why declare multiple selectif only 1 item can be selected?
@@ -271,6 +272,14 @@ export class SimpleSurvey extends Component {
                 options.allowDeselect = allowDeselect === undefined || allowDeselect === true;
                 options.defaultSelection = defaultSelection !== undefined ? defaultSelection : null;
                 this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
+
+                if (Array.isArray(options.defaultSelection)) {
+                    // Set timeout is used here to avoid updateAnswer's call to setState.
+                    setTimeout(() => this.updateAnswer({
+                        questionId: survey[currentQuestionIndex].questionId,
+                        value: survey[currentQuestionIndex].options.filter((element, index) => options.defaultSelection.includes(index)) 
+                    }), 0);
+                }
             }
         }
 
