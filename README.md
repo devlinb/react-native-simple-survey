@@ -18,6 +18,19 @@
 [Screenshots](#screenshot)
 
 ## Changes
+3.0.0 - Breaking changes to API to fix inconsistency in orders parameters were being passed into callbacks.
+* **BREAKING CHANGES**
+  * ```renderTextInput``` and ```renderNumericInput``` are passed ``placeholder`` as their third parameter, and ``onBlur`` as their fourth. 
+    * Previously ``renderTextInput`` was taking ``placeholder`` as its second parameter.
+* **New Features** 
+  * ``defaultValue`` for text and numeric inputs.
+  * ``getAnswers()`` on a ref to grab whatever answers have been given so far.
+* documented ``onBlur`` for auto-advance of text and numeric input components
+* Added type fields for parameters in readme.
+
+* Updated ExampleApp to bring it in line with new features.
+
+
 2.0.2 - When a default defaultSelection is set, the next and finish buttons are now properly enabled.
 
 2.0.1 - Update README.md for NPM.
@@ -165,6 +178,12 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
   
 Props that you don't use are always optional. e.g. if you don't have numeric questions, no need to pass in renderNumericInput. Corrolary of this is that SimpleSurvey will throw exceptions if you do pass in a ````questionType: 'NumericInput'```` without having defined renderNumericInput.
 
+## Ref Functions
+
+|Function|Description|
+|--------|-----------|
+|getAnswers()|Returns JSON for all answers the user has submitted so far. Unanswered questions will not be present in the JSON.|
+
 ## Callbacks
 
 The majority of callbacks will return a component that Simple Survey then renders for you. This means you completely customize how Simple Survey looks. You don't even have to use buttons for your UI, Simple Survey handles the state management and lets you render whatever you want. 
@@ -174,10 +193,10 @@ The majority of callbacks will return a component that Simple Survey then render
 ### Navigation Callbacks 
 The props ````renderPrevious````, ````renderNext````, ````renderFinished```` all have the same form.
 
-|Parameter|Description|
-|---------|-----------|
-|onPress|Must be called when this component is activated (tapped, swiped, clicked, etc)|
-|enabled|Boolean indicating if this component should be enabled.|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|onPress|Callback (void)|Must be called when this component is activated (tapped, swiped, clicked, etc)|
+|enabled|boolean|Indicates if this component should be enabled.|
 
 
 The onPress equivalent (feel free to have fun, so long as the user indicates something) has to call the ````onPress```` lambda that is passed in. At its most boring this looks like 
@@ -199,9 +218,9 @@ enabled tells you if the button should be enabled or not.
 ### renderQuestionText
 Must returns a component. This is the text shown above above each question.
 
-|Parameter|Description|
-|---------|-----------|
-|questionText|Text of the question as specified in the JSON for this question.|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|questionText|string|Text of the question as specified in the JSON for this question.|
 
 Sample usage
 
@@ -214,12 +233,12 @@ const renderQuestionText = (questionText) => {
 ### renderSelector
 Must return a component. This is the UI element that will be shown for each option of a SelectionGroup and MultipleSelectionGroup, Buttons, radio buttons, sliders, whatever you want, so long as onPress gets called when the user has selected something.
 
-|Variable|Description|
-|--------|-----|
-|data|A complete copy of the 'value' field defined in the JSON object for this SelectionGroup. See example below.|
-|index| Index of this option in the array of ````options```` that was passed to the SelectionGroup. Useful as key on your component.|
-|isSelected| Indicates if the user has selected this option. |
-|onPress| Must be called when the user has selected this component as their choice.|
+|Variable|Type|Description|
+|--------|----|-----|
+|data|any|A complete copy of the 'value' field defined in the JSON object for this SelectionGroup. See example below.|
+|index|number|Index of this option in the array of ````options```` that was passed to the SelectionGroup. Useful as key on your component.|
+|isSelected|boolean|Indicates if the user has selected this option. |
+|onPress|Callback (selection handler interface as defined in react-native-selection-group) | Must be called when the user has selected this component as their choice.|
 
 Sample usage
 
@@ -237,9 +256,9 @@ const renderSelector = (data, index, isSelected, onPress) => {
 ### onSurveyFinished
 Called after the user activates the component passed in to ````renderFinished````
 
-|Parameter|Description|
-|---------|-----------|
-|answers|Array of JSON values as described below.|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|answers|Array|Array of JSON values as described below.|
 
 This is passed a JSON array of the form
 
@@ -270,11 +289,13 @@ It is highly recommended that you do something like ````const infoQuestionsRemov
 ### onQuestionAnswered
 Called after the user activates the ````renderNext```` component.
 
-|Parameter|Description|
-|---------|-----------|
-|answers|Of type string or Object, see description below|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|answers|string || object|See description below|
 
-answer is the user's input for Numeric and Text input, it is the entire Option object for SelectionGroup. As an example, from the sample JSON up above, if the user selected Dogs, onQuestionAnswered would receive
+```answer``` is the user input for Numeric and Text inputs, it is the entire Option object as specified in your JSON for a SelectionGroup.
+
+As an example, from the sample JSON up above, if the user selected Dogs, onQuestionAnswered would receive
 
 ````JS
 { 
@@ -286,20 +307,22 @@ answer is the user's input for Numeric and Text input, it is the entire Option o
 ### renderTextInput
 Must return a component. Renders input component for questions of type TextInput.
 
-|Parameter|Description|
-|---------|-----------|
-|onChange|Must be called for every character input by the user|
-|placeHolder| Placeholder text as indicated in the JSON, may be blank if not specified in the JSON|
-|value|Current value of this field|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|onChange|Callback (string)|Must be called for every character input by the user|
+|value|String|Current value of this field|
+|placeHolder|String|Placeholder text as indicated in the JSON, will be null if not specified in the JSON|
+|onBlur|Callback (void)|Function to be called when the text input field is blurred, used for auto-advancing, not needed if you are not enabling autoadvance.|
 
 Example:
 
 ````JSX
-const renderTextInput = (onChange, placeholder, value) {
+const renderTextInput = (onChange, value placeholder, onBlur) {
   return (<TextInput
     onChangeText={text => onChange(text)}
-    placeholder={placeholder}
     value={value}
+    placeholder={placeholder}
+    onBlur={onBlur}
   />);
 }
 ````
@@ -309,23 +332,28 @@ See the ExampleApp for a better styled, more functional, example.
 ### renderNumericInput
 Must return a component. Renders input component for questions of type NumericInput. 
 
-|Parameter|Description|
-|---------|-----------|
-|onChange|Must be called for every character input by the user|
-|value|Current value of this field|
+|Parameter|Type|Description|
+|---------|----|-----------|
+|onChange|Callback (string)|Must be called for every character input by the user|
+|value|string|Current value of this field, empty string if the field is empty|
+|placeholder|String| Placeholder text as indicated in the JSON, will be null if not specified in the JSON|
+|onBlur|Callback (void)|Function to be called when the numeric input field is blurred, used for auto-advancing, not needed if you are not using autoadvance.|
+
 
 Example:
 
 ````JSX
-const renderNumericInput = (onChange, value) {
+const renderNumericInput = (onChange, value, placeholder, onBlur) {
   return (<TextInput 
     style={styles.numericInput}
     onChangeText={text => { onChange(text); }}
     underlineColorAndroid={'white'}
     placeholderTextColor={'rgba(184,184,184,1)'}
+    placeholder={placeHolder}
     value={String(value)}
     keyboardType={'numeric'}
     maxLength={3}
+    onBlur={onBlur}
   />);
 }
 ````
@@ -359,14 +387,16 @@ interface TextInput: {
     questionType: "TextInput",
     questionText: string,
     questionId: string,
-    placeholderText?: string
+    placeholderText?: string,
+    defaultValue?: string
 }
 
 interface NumericInput: {
     questionType: "NumericInput",
     questionText: string,
     questionId: string,
-    placeholderText?: string,
+    placeholderText?: string || number,
+    defaultValue?: string || number
 }
 
 interface SelectionGroupOption: {

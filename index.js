@@ -40,6 +40,11 @@ export class SimpleSurvey extends Component {
         this.selectionHandlers = [];
     }
 
+    getAnswers() {
+        const filteredAnswers = this.state.answers.filter(n => n);
+        return filteredAnswers;
+    }
+
     // This function returns true if all the condition have been met for a multiple selection question.
     validateMultipleSelectionSurveyAnswers() {
         const { currentQuestionIndex, answers } = this.state;
@@ -317,7 +322,14 @@ export class SimpleSurvey extends Component {
         const { survey, renderNumericInput, containerStyle } = this.props;
         const currentQuestionIndex = this.state.currentQuestionIndex;
         const answers = this.state.answers;
-        const { questionText, questionId } = survey[currentQuestionIndex];
+        const { questionText, questionId, placeholderText = null, defaultValue = '' } = survey[currentQuestionIndex];
+
+        if (answers[currentQuestionIndex] === undefined && (defaultValue || defaultValue === 0) && Number.isInteger(parseInt(`${defaultValue}`, 10))) {
+            setTimeout(() => this.updateAnswer({
+                questionId: survey[currentQuestionIndex].questionId,
+                value: defaultValue
+                }), 0);
+        }
 
         return (
             <View style={containerStyle}>
@@ -339,6 +351,7 @@ export class SimpleSurvey extends Component {
                         }
                     },
                     answers[currentQuestionIndex] === undefined ? '' : answers[currentQuestionIndex].value,
+                    placeholderText,
                     this.props.autoAdvance ? this.autoAdvance.bind(this) : null
                 )}
                 {this.renderNavButtons()}
@@ -350,7 +363,13 @@ export class SimpleSurvey extends Component {
         const { survey, renderTextInput, containerStyle } = this.props;
         const currentQuestionIndex = this.state.currentQuestionIndex;
         const answers = this.state.answers;
-        const { questionText, questionId, placeholderText = null } = survey[currentQuestionIndex];
+        const { questionText, questionId, placeholderText = null, defaultValue } = survey[currentQuestionIndex];
+        if (answers[currentQuestionIndex] === undefined && defaultValue) {
+            setTimeout(() => this.updateAnswer({
+                questionId: survey[currentQuestionIndex].questionId,
+                value: defaultValue
+                }), 0);
+        }
 
         return (<View style={containerStyle}>
             {this.props.renderQuestionText ?
@@ -360,8 +379,8 @@ export class SimpleSurvey extends Component {
                     questionId,
                     value
                 }),
-                placeholderText,
                 answers[currentQuestionIndex] === undefined ? undefined : answers[currentQuestionIndex].value,
+                placeholderText,
                 this.props.autoAdvance ? this.autoAdvance.bind(this) : null
             )}
             {this.renderNavButtons()}

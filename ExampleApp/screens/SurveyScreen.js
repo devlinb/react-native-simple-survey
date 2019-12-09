@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Button, ScrollView, Text, TextInput, View } from 'react-native';
 import { SimpleSurvey } from 'react-native-simple-survey';
 import { COLORS } from '../res/validColors';
 
@@ -13,7 +13,7 @@ const survey = [
     },
     {
         questionType: 'TextInput',
-        questionText: 'Simple Survey supports free form text input',
+        questionText: 'Simple Survey supports free form text input.\n\nWhat is your favorite color?',
         questionId: 'favoriteColor',
         placeholderText: 'Tell me your favorite color!',
     },
@@ -21,7 +21,13 @@ const survey = [
         questionType: 'NumericInput',
         questionText: 'It also supports numeric input. Enter your favorite number here!',
         questionId: 'favoriteNumber',
-        placeholderText: '',
+        placeholderText: '42',
+    },
+    {
+        questionType: 'NumericInput',
+        questionText: 'New to 3.0, default values!\n\nHow many balls can you juggle at once?',
+        questionId: 'jugglingBalls',
+        defaultValue: '0'
     },
     {
         questionType: 'SelectionGroup',
@@ -219,7 +225,7 @@ export default class SurveyScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { backgroundColor: PURPLE };
+        this.state = { backgroundColor: PURPLE, answersSoFar: '' };
     }
 
     onSurveyFinished(answers) {
@@ -264,6 +270,7 @@ export default class SurveyScreen extends Component {
      *  is restricted (age, geo-fencing) from your app.
      */
     onAnswerSubmitted(answer) {
+        this.setState({ answersSoFar: JSON.stringify(this.surveyRef.getAnswers(), 2) });
         switch (answer.questionId) {
             case 'favoriteColor': {
                 if (COLORS.includes(answer.value.toLowerCase())) {
@@ -342,7 +349,7 @@ export default class SurveyScreen extends Component {
         );
     }
 
-    renderTextBox(onChange, placeholder, value, onBlur) {
+    renderTextBox(onChange, value, placeholder, onBlur) {
         return (
             <View>
                 <TextInput
@@ -362,13 +369,14 @@ export default class SurveyScreen extends Component {
         );
     }
 
-    renderNumericInput(onChange, value, onBlur) {
+    renderNumericInput(onChange, value, placeholder, onBlur) {
         return (<TextInput 
             style={styles.numericInput}
             onChangeText={text => { onChange(text); }}
             underlineColorAndroid={'white'}
             placeholderTextColor={'rgba(184,184,184,1)'}
             value={String(value)}
+            placeholder={placeholder}
             keyboardType={'numeric'}
             onBlur={onBlur}
             maxLength={3}
@@ -388,6 +396,7 @@ export default class SurveyScreen extends Component {
             <View style={[styles.background, { backgroundColor: this.state.backgroundColor }]}>
                 <View style={styles.container}>
                     <SimpleSurvey
+                        ref={(s) => { this.surveyRef = s; }}
                         survey={survey}
                         renderSelector={this.renderButton.bind(this)}
                         containerStyle={styles.surveyContainer}
@@ -403,7 +412,14 @@ export default class SurveyScreen extends Component {
                         renderNumericInput={this.renderNumericInput}
                         renderInfo={this.renderInfoText}
                     />
+                    
                 </View>
+                
+                <ScrollView style={styles.answersContainer}>
+                    <Text style={{textAlign:'center'}}>JSON output</Text>
+                    <Text>{this.state.answersSoFar}</Text>
+                </ScrollView>
+                
             </View>
         );
     }
@@ -423,6 +439,18 @@ const styles = StyleSheet.create({
         maxWidth: '90%',
         alignItems: 'stretch',
         justifyContent: 'center',
+        
+        elevation: 20,
+        borderRadius: 10,
+        flex: 1, 
+    },
+    answersContainer: {
+        width: '90%',
+        maxHeight: '20%',
+        marginTop: 50,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        marginBottom: 20,
         backgroundColor: 'white',
         elevation: 20,
         borderRadius: 10,
@@ -436,7 +464,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
         alignContent: 'center',
-        padding: 5
+        padding: 5,
+        flexGrow: 0,
     },
     selectionGroupContainer: {
         flexDirection: 'column',
