@@ -12,7 +12,7 @@ export class SimpleSurvey extends Component {
         survey: PropTypes.arrayOf(
             PropTypes.shape({
                 questionType: PropTypes.string.isRequired,
-                questionText: PropTypes.string,
+                questionText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
                 questionId: PropTypes.string,
                 options: PropTypes.arrayOf(PropTypes.shape({
                     optionText: PropTypes.string.isRequired,
