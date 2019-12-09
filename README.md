@@ -27,7 +27,7 @@
   * ``getAnswers()`` on a ref to grab whatever answers have been given so far.
 * documented ``onBlur`` for auto-advance of text and numeric input components
 * Added type fields for parameters in readme.
-
+* You can now pass in any object for questionText, since you have to render it anyway, have fun! 
 * Updated ExampleApp to bring it in line with new features.
 
 
@@ -380,12 +380,12 @@ survey : Array<Info|TextInput|NumericInput|SelectionGroup|MultipleSelectionGroup
 
 interface Info: {
     questionType: "Info",
-    questionText: string
+    questionText: string || object
 }
 
 interface TextInput: {
     questionType: "TextInput",
-    questionText: string,
+    questionText: string || object,
     questionId: string,
     placeholderText?: string,
     defaultValue?: string
@@ -393,7 +393,7 @@ interface TextInput: {
 
 interface NumericInput: {
     questionType: "NumericInput",
-    questionText: string,
+    questionText: string || object,
     questionId: string,
     placeholderText?: string || number,
     defaultValue?: string || number
@@ -406,7 +406,7 @@ interface SelectionGroupOption: {
 
 interface SelectionGroup: {
     questionType: "SelectionGroup",
-    questionText: string,
+    questionText: string || object,
     questionId: string,
     questionSettings: {
         autoAdvance: boolean,
@@ -419,7 +419,7 @@ interface SelectionGroup: {
 
 interface MultipleSelectionGroup: {
     questionType: "MultipleSelectionGroup",
-    questionText: string,
+    questionText: string || object,
     questionId: string,
     questionSettings: {
         autoAdvance: boolean,
