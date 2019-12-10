@@ -182,7 +182,7 @@ Props that you don't use are always optional. e.g. if you don't have numeric que
 
 |Function|Description|
 |--------|-----------|
-|getAnswers()|Returns JSON for all answers the user has submitted so far. Unanswered questions will not be present in the JSON.|
+|getAnswers()|Returns JSON for all answers the user has submitted so far. ```defaultValue``` for questions the user has seen but not proceeded past will also be returned. Unanswered questions will not be present in the JSON. Info questions are filtered from the returned JSON.  |
 
 ## Callbacks
 
@@ -284,7 +284,7 @@ where value is the answer the user selected or entered. Selection Group is more 
 
 Navigation to leave or close out SimpleSurvey should go here.
 
-It is highly recommended that you do something like ````const infoQuestionsRemoved = [...answers];```` to remove Info elements from the array.
+Note that Info questions are automatically removed from the returned array, only questions that have non-null answers will be returned.
 
 ### onQuestionAnswered
 Called after the user activates the ````renderNext```` component.
