@@ -169,7 +169,7 @@ The below looks like a lot. To get started, you can copy/paste from the ExampleA
 |renderPrevious| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Most often a some type of ``<TouchableOpacity>`` or your favorite flavor of ``<Button>``|
 |renderNext| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
 |renderFinished| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section.|
-|renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Basically a ````<Text>```` element|
+|renderQuestionText| Function that returns a component following the specifications as laid out in the [Callbacks](#callbacks) section. Typically this will return a ````<Text>```` element|
 |onSurveyFinished| This function receives answers the user typed/selected as the parameter ``answers``, see the [Callbacks](#callbacks) section. |
 |onAnswerSubmitted| This function is called everytime the user navigates to the next screen, see the [Callbacks](#callbacks) section. |
 |renderTextInput| Function that returns the component used for user text input, see the [Callbacks](#callbacks) section.|
