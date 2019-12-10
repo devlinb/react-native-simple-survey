@@ -220,7 +220,7 @@ Must returns a component. This is the text shown above above each question.
 
 |Parameter|Type|Description|
 |---------|----|-----------|
-|questionText|string|Text of the question as specified in the JSON for this question.|
+|questionText|string\|\|object|Typically text of the question as specified in the JSON for this question. Since this is passed into your own rendering function, feel free to define an object in your JSON for more advanced scenarios.|
 
 Sample usage
 
