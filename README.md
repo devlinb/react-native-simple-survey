@@ -284,7 +284,7 @@ where value is the answer the user selected or entered. Selection Group is more 
 
 Navigation to leave or close out SimpleSurvey should go here.
 
-Note that Info questions are automatically removed from the returned array, only questions that have non-null answers will be returned.
+Info questions are automatically removed from the returned array, only questions that have non-null answers will be returned. Questions with an assigned ```defaultValue``` in the JSON that the user has only *viewed* will also be returned.
 
 ### onQuestionAnswered
 Called after the user activates the ````renderNext```` component.
