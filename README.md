@@ -291,7 +291,7 @@ Called after the user activates the ````renderNext```` component.
 
 |Parameter|Type|Description|
 |---------|----|-----------|
-|answers|string || object|See description below|
+|answers|string `||` object|See description below|
 
 ```answer``` is the user input for Numeric and Text inputs, it is the entire Option object as specified in your JSON for a SelectionGroup.
 
