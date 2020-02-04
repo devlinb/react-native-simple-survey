@@ -177,11 +177,6 @@ export class SimpleSurvey extends Component {
                 `allowDeselect was not passed in as a boolean for question ${currentQuestionIndex}`
             );
         }
-        if (defaultSelection !== undefined && (this.props.autoAdvance || autoAdvanceThisQuestion)) {
-            throw new Error(
-                `Cannot set auto advance and a default selection for question ${currentQuestionIndex}`
-            );
-        }
         if (autoAdvanceThisQuestion !== undefined && 
             typeof autoAdvanceThisQuestion !== 'boolean') {
                 throw new Error(
@@ -207,11 +202,18 @@ export class SimpleSurvey extends Component {
                     );
                 }
 
+                const hasDefaultValue = defaultSelection !== undefined;
                 const options = {};
                 options.maxMultiSelect = 1;
                 options.allowDeselect = allowDeselect === undefined || allowDeselect === true;
-                options.defaultSelection = defaultSelection !== undefined ? defaultSelection : null;
-                
+                options.defaultSelection = hasDefaultValue ? defaultSelection : null;
+
+                if(hasDefaultValue && autoAdvanceThisQuestion) {
+                    setTimeout(() => {
+                        this.autoAdvance()
+                    }, 50);
+                }
+
                 this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
                 
                 if (typeof options.defaultSelection === 'number') { 
