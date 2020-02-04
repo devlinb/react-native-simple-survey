@@ -274,11 +274,19 @@ export class SimpleSurvey extends Component {
                         `Default Selection not specified as an array for multiple selection question ${currentQuestionIndex}`
                     );
                 }
+
+                const hasDefaultValue = defaultSelection !== undefined;
                 const options = {};
                 options.maxMultiSelect = multiSelectMax;
                 options.allowDeselect = allowDeselect === undefined || allowDeselect === true;
-                options.defaultSelection = defaultSelection !== undefined ? defaultSelection : null;
+                options.defaultSelection = hasDefaultValue ? defaultSelection : null;
                 this.selectionHandlers[currentQuestionIndex] = new SelectionHandler(options);
+
+                if(hasDefaultValue && autoAdvanceThisQuestion) {
+                    setTimeout(() => {
+                        this.autoAdvance()
+                    }, 50);
+                }
 
                 if (Array.isArray(options.defaultSelection)) {
                     // Set timeout is used here to avoid updateAnswer's call to setState.
