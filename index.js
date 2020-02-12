@@ -126,8 +126,7 @@ export class SimpleSurvey extends Component {
         switch (survey[currentQuestionIndex].questionType) {
             case 'MultipleSelectionGroup': enabled = this.validateMultipleSelectionSurveyAnswers(); break;
             case 'Info': enabled = true; break;
-            // TODO: See if we need an explicit check against === 0 here
-            default: enabled = Boolean(answers[currentQuestionIndex]) && answers[currentQuestionIndex].value; break;
+            default: enabled = Boolean(answers[currentQuestionIndex]) && (answers[currentQuestionIndex].value || answers[currentQuestionIndex].value === 0); break;
         }
 
         if (currentQuestionIndex === this.props.survey.length - 1) {
