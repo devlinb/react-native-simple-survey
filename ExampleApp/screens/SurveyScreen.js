@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         justifyContent: 'center',
         
-        elevation: 20,
+        
         borderRadius: 10,
         flex: 1, 
     },
@@ -466,6 +466,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         padding: 5,
         flexGrow: 0,
+        elevation: 20,
     },
     selectionGroupContainer: {
         flexDirection: 'column',
