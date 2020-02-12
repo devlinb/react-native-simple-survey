@@ -126,6 +126,7 @@ export class SimpleSurvey extends Component {
         switch (survey[currentQuestionIndex].questionType) {
             case 'MultipleSelectionGroup': enabled = this.validateMultipleSelectionSurveyAnswers(); break;
             case 'Info': enabled = true; break;
+            // TODO: See if we need an explicit check against === 0 here
             default: enabled = Boolean(answers[currentQuestionIndex]) && answers[currentQuestionIndex].value; break;
         }
 
@@ -254,7 +255,6 @@ export class SimpleSurvey extends Component {
     }
 
     renderMultipleSelectionGroup() {
-        console.log('rendering multipleselectiongroup');
         const { survey, renderSelector, selectionGroupContainerStyle, containerStyle } = this.props;
         const { currentQuestionIndex } = this.state;
         const { allowDeselect, defaultSelection, autoAdvance: autoAdvanceThisQuestion } = 
