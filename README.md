@@ -317,7 +317,7 @@ Must return a component. Renders input component for questions of type TextInput
 Example:
 
 ````JSX
-const renderTextInput = (onChange, value placeholder, onBlur) {
+const renderTextInput = (onChange, value, placeholder, onBlur) {
   return (<TextInput
     onChangeText={text => onChange(text)}
     value={value}
