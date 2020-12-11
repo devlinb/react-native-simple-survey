@@ -2423,8 +2423,9 @@ inherits@2, inherits@2.0.3, inherits@^2.0.3, inherits@~2.0.3:
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
 ini@~1.3.0:
-  version "1.3.5"
-  resolved "https://registry.npmjs.org/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
+  integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
 inquirer@^0.12.0:
   version "0.12.0"
@@ -4025,10 +4026,10 @@ react-native-selection-group@^2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-simple-survey@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-survey/-/react-native-simple-survey-2.0.0.tgz#c03c621f36b08740fe250ec5a2645b6449fa5b1f"
-  integrity sha512-Zu7WcBAWZI0yH7T0wewMjT7DwVvq83JKsTUH3hiZ5/rGUg5Unx4dhHUT43IBpP/9NHg3AVp+6hW7bd4Uq7osGg==
+react-native-simple-survey@^3.0.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-simple-survey/-/react-native-simple-survey-3.1.2.tgz#7cda7d4a7a7f984e4df241eac0389c2f6dbfd16d"
+  integrity sha512-CU+CoDrcegbpk2qf5LanMmrPQs/gVHD9QncZINX/6my5ES0M4KebzjvDlJbuo+RhEUAcW1PfMVlhKY95SF9v4g==
   dependencies:
     react-native-selection-group "^2.0.0"
 
