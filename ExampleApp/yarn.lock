@@ -1382,8 +1382,9 @@ decamelize@^1.1.1:
   resolved "https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -4025,10 +4026,10 @@ react-native-selection-group@^2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-simple-survey@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-survey/-/react-native-simple-survey-2.0.0.tgz#c03c621f36b08740fe250ec5a2645b6449fa5b1f"
-  integrity sha512-Zu7WcBAWZI0yH7T0wewMjT7DwVvq83JKsTUH3hiZ5/rGUg5Unx4dhHUT43IBpP/9NHg3AVp+6hW7bd4Uq7osGg==
+react-native-simple-survey@^3.0.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-simple-survey/-/react-native-simple-survey-3.1.2.tgz#7cda7d4a7a7f984e4df241eac0389c2f6dbfd16d"
+  integrity sha512-CU+CoDrcegbpk2qf5LanMmrPQs/gVHD9QncZINX/6my5ES0M4KebzjvDlJbuo+RhEUAcW1PfMVlhKY95SF9v4g==
   dependencies:
     react-native-selection-group "^2.0.0"
 
